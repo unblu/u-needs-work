@@ -6,8 +6,6 @@ image::Unblu-logo.png[]
 
 In order to interact with a given Gitlab instance through its REST API, `u-needs-work` needs to be authorized and authenticated. To do so, together with Gitlab's instance URL, an API token must be provided. 
 
-In case merge-requests require one approval to be merged, an additional API token must be provided. If the merge-request author is allowed to approve its own merge-requests, both API tokens can be identical.
-
 === GitLab: Generate an API Token
 
 You will need a https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html[personal access token] or a https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html[group access] in order for the tool to interact with your repositories on GitLab.
@@ -20,7 +18,7 @@ You will need the `api` scope.
 
 === Application Setup
 
-Some configurations are available for u-needs-work:
+Some configurations are available for `u-needs-work`:
 
 .Example `application.properties` file
 ----
@@ -45,7 +43,7 @@ Specify the location of the GitLab server:
 
 ==== GitLab api token
 
-Specify the api token value used when u-needs-work is performing REST calls.
+Specify the api token value used when `u-needs-work` is performing REST calls.
 
 * key: `gitlab.api.token`
 * No default value.
@@ -53,12 +51,14 @@ Specify the api token value used when u-needs-work is performing REST calls.
 
 === GitLab: Webhook Setup
 
-In the corresponding repository or group configure a https://docs.gitlab.com/ee/user/project/integrations/webhooks.html[Webhook] pointing to the location where u-needs-work is available:
+In the corresponding repository or group configure a https://docs.gitlab.com/ee/user/project/integrations/webhooks.html[Webhook] pointing to the location where `u-needs-work` is available:
 
-* URL: `<server url>/u-needs-work/merge-request`
+* URL: `<server url>/u-needs-work/event`
 * Trigger: `Comments events`
 
-WARNING: From an operational point of view, it might be safer to deploy u-needs-work to a server where only your GitLab instance has access.
+WARNING: From an operational point of view, it might be safer to deploy `u-needs-work` to a server where only your GitLab instance has access.
+
+Read more about the different available xref:30_endpoints.adoc[endpoints].
 
 == Dev setup
 
@@ -70,19 +70,19 @@ If you are working locally with a remote gitlab instance (like https://gitlab.co
 
 With a tool like https://ngrok.com/[ngrok] you will get a public url (something like `https://2a01-8943-19d-e0a-8b20-645f-f7a2-c2d-9be1.ngrok.io`) that points to your localhost computer.
 
-.start ngrok (assuming u-needs-work is running locally on port 8080)
+.start ngrok (assuming `u-needs-work` is running locally on port 8080)
 ----
 ngrok http 8080
 ----
 
-With a tool like https://mitmproxy.org/[mitmproxy] you can proxy the remote instance to capture the REST requests made by u-needs-work to the remote instance:
+With a tool like https://mitmproxy.org/[mitmproxy] you can proxy the remote instance to capture the REST requests made by `u-needs-work` to the remote instance:
 
 .start mitmproxy
 ----
 mitmproxy -p 8888 --mode reverse:https://gitlab.com
 ----
 
-And then make u-needs-work use `localhost:8888` instead of `gitlab.com` directly:
+And then make `u-needs-work` use `localhost:8888` instead of `gitlab.com` directly:
 
 .use mitmproxy
 ----

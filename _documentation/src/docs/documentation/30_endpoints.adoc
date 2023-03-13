@@ -11,7 +11,7 @@ image::Unblu-logo.png[]
 POST <server url>/u-needs-work/event
 ----
 
-This is the principal endpoint, that receive the https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html#merge-request-events[Merge Request Webhook event] sent by GitLab.
+This is the principal endpoint, that receive the https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html#comment-events[Comment Webhook event] sent by GitLab.
 
 Requests are processed asynchronously, meaning that GitLab will receive a `202 Accepted` response back immediately.
 
@@ -22,7 +22,7 @@ Example:
 include::u-needs-work-non-blocking-response.json[]
 ----
 
-* `build_commit` and `build_timestamp` allow you to identify the u-needs-work version.
+* `build_commit` and `build_timestamp` allow you to identify the `u-needs-work` version.
 * `gitlab_event_uuid` is the value received in the `X-Gitlab-Event-UUID` header.
 
 === Blocking endpoint
