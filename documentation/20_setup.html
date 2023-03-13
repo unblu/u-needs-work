@@ -279,9 +279,6 @@
 <div class="paragraph">
 <p>In order to interact with a given Gitlab instance through its REST API, <code>u-needs-work</code> needs to be authorized and authenticated. To do so, together with Gitlab&#8217;s instance URL, an API token must be provided.</p>
 </div>
-<div class="paragraph">
-<p>In case merge-requests require one approval to be merged, an additional API token must be provided. If the merge-request author is allowed to approve its own merge-requests, both API tokens can be identical.</p>
-</div>
 <div class="sect2">
 <h3 id="_gitlab_generate_an_api_token">GitLab: Generate an API Token</h3>
 <div class="paragraph">
@@ -300,7 +297,7 @@
 <div class="sect2">
 <h3 id="_application_setup">Application Setup</h3>
 <div class="paragraph">
-<p>Some configurations are available for u-needs-work:</p>
+<p>Some configurations are available for <code>u-needs-work</code>:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example <code>application.properties</code> file</div>
@@ -338,7 +335,7 @@ For example you can use following system property to set the <code>gitlab.api.to
 <div class="sect3">
 <h4 id="_gitlab_api_token">GitLab api token</h4>
 <div class="paragraph">
-<p>Specify the api token value used when u-needs-work is performing REST calls.</p>
+<p>Specify the api token value used when <code>u-needs-work</code> is performing REST calls.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -358,12 +355,12 @@ For example you can use following system property to set the <code>gitlab.api.to
 <div class="sect2">
 <h3 id="_gitlab_webhook_setup">GitLab: Webhook Setup</h3>
 <div class="paragraph">
-<p>In the corresponding repository or group configure a <a href="https://docs.gitlab.com/ee/user/project/integrations/webhooks.html">Webhook</a> pointing to the location where u-needs-work is available:</p>
+<p>In the corresponding repository or group configure a <a href="https://docs.gitlab.com/ee/user/project/integrations/webhooks.html">Webhook</a> pointing to the location where <code>u-needs-work</code> is available:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>URL: <code>&lt;server url&gt;/u-needs-work/merge-request</code></p>
+<p>URL: <code>&lt;server url&gt;/u-needs-work/event</code></p>
 </li>
 <li>
 <p>Trigger: <code>Comments events</code></p>
@@ -377,10 +374,13 @@ For example you can use following system property to set the <code>gitlab.api.to
 <div class="title">Warning</div>
 </td>
 <td class="content">
-From an operational point of view, it might be safer to deploy u-needs-work to a server where only your GitLab instance has access.
+From an operational point of view, it might be safer to deploy <code>u-needs-work</code> to a server where only your GitLab instance has access.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Read more about the different available <a href="30_endpoints.html">endpoints</a>.</p>
 </div>
 </div>
 </div>
@@ -400,13 +400,13 @@ From an operational point of view, it might be safer to deploy u-needs-work to a
 <p>With a tool like <a href="https://ngrok.com/">ngrok</a> you will get a public url (something like <code><a href="https://2a01-8943-19d-e0a-8b20-645f-f7a2-c2d-9be1.ngrok.io" class="bare">https://2a01-8943-19d-e0a-8b20-645f-f7a2-c2d-9be1.ngrok.io</a></code>) that points to your localhost computer.</p>
 </div>
 <div class="listingblock">
-<div class="title">start ngrok (assuming u-needs-work is running locally on port 8080)</div>
+<div class="title">start ngrok (assuming <code>u-needs-work</code> is running locally on port 8080)</div>
 <div class="content">
 <pre>ngrok http 8080</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>With a tool like <a href="https://mitmproxy.org/">mitmproxy</a> you can proxy the remote instance to capture the REST requests made by u-needs-work to the remote instance:</p>
+<p>With a tool like <a href="https://mitmproxy.org/">mitmproxy</a> you can proxy the remote instance to capture the REST requests made by <code>u-needs-work</code> to the remote instance:</p>
 </div>
 <div class="listingblock">
 <div class="title">start mitmproxy</div>
@@ -415,7 +415,7 @@ From an operational point of view, it might be safer to deploy u-needs-work to a
 </div>
 </div>
 <div class="paragraph">
-<p>And then make u-needs-work use <code>localhost:8888</code> instead of <code>gitlab.com</code> directly:</p>
+<p>And then make <code>u-needs-work</code> use <code>localhost:8888</code> instead of <code>gitlab.com</code> directly:</p>
 </div>
 <div class="listingblock">
 <div class="title">use mitmproxy</div>
