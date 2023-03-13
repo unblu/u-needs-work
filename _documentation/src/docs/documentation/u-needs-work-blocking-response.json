@@ -1,0 +1,15 @@
+{
+  "build_commit" : "6af21ad",
+  "build_timestamp" : "2022-01-01T07:21:58.378413Z",
+  "gitlab_event_uuid" : "62940263-b495-4f7e-b0e8-578c7307f13d",
+  "needs_work_note" : {
+    "project_id" : 56,
+    "note_id" : 42395,
+    "note_author_id" : 139,
+    "note_content" : "[John Smith](https://gitlab.example.com/jsmith) [requested](https://gitlab.example.com/a_project/-/merge_requests/34#note_1234) changes on this MR.\n\n:eye_in_speech_bubble: [New changes](https://gitlab.example.com/a_project/-/merge_requests/34/diffs?start_sha=e54b4d028af6509e3b97467b153e16753c35747d) since the comment.",
+    "mr_iid" : 34,
+    "mr_last_commit_sha" : "e54b4d028af6509e3b97467b153e16753c35747d",
+    "mr_web_url" : "https://gitlab.example.com/a_project/-/merge_requests/34"
+  },
+  "needs_work_note_type" : "ADDED"
+}

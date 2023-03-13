@@ -1,0 +1,15 @@
+:imagesdir: ../images
+image::Unblu-logo.png[]
+:jbake-title: User Guide
+
+== User guide
+
+Suppose you have a setup where `u-needs-work` is already configured correctly (see xref:20_setup.adoc[Setup]).
+
+image::review.png[alt=Post a review in GitLab,width=534,height=295]
+
+On any merge request, if a user post a review (or a comment) containing "🔧" (the `:wrench:` emoji) or "needs work" then an additional comment will be added to the MR timeline by the `u-needs-work` tool.
+
+image::needs-work-comment.png[alt=Flower,width=788,height=175]
+
+Using the "New changes since the comment." link, you can access the diff view where you compare the changes since your last review.

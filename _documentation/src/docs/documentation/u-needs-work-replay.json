@@ -1,0 +1,12 @@
+{
+  "project_id" : 56,
+  "note_id" : 42333,
+  "note_web_url" : "https://gitlab.example.com/a_project/-/merge_requests/34#note_42333",
+  "note_author_id" : 37,
+  "note_content" : "This needs work!",
+  "mr_iid" : 34,
+  "mr_last_commit_sha" : "e54b4d028af6509e3b97467b153e16753c35747d",
+  "mr_web_url" : "https://gitlab.example.com/a_project/-/merge_requests/34",
+  "user_name" : "John Smith",
+  "gitlab_event_uuid" : "test-8902345"
+}

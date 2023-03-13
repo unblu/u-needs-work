@@ -1,0 +1,74 @@
+:imagesdir: ../images
+image::Unblu-logo.png[]
+:jbake-title: Endpoints
+
+== Endpoints
+
+=== Main endpoint
+
+[source, http]
+----
+POST <server url>/u-needs-work/event
+----
+
+This is the principal endpoint, that receive the https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html#merge-request-events[Merge Request Webhook event] sent by GitLab.
+
+Requests are processed asynchronously, meaning that GitLab will receive a `202 Accepted` response back immediately.
+
+Example:
+
+[source, json]
+----
+include::u-needs-work-non-blocking-response.json[]
+----
+
+* `build_commit` and `build_timestamp` allow you to identify the u-needs-work version.
+* `gitlab_event_uuid` is the value received in the `X-Gitlab-Event-UUID` header.
+
+=== Blocking endpoint
+
+A secondary endpoint where the process in done in a blocking way is available as well:
+
+[source, http]
+----
+POST <server url>/u-needs-work/event-blocking
+----
+
+With this blocking endpoint you get more information about the created comment in the returned response.
+
+Example:
+
+[source, json]
+----
+include::u-needs-work-blocking-response.json[]
+----
+
+Since GitLab keeps the response obtained when delivering a webhook event and displays it in the webhook admin page, using this endpoint might be interesting for debugging purpose.
+
+=== Replay endpoint
+
+An additional endpoint is available to trigger the process using some simplified input compared to comment event body sent by the GitLab Webhook API.
+
+[source, http]
+----
+POST <server url>/u-needs-work/replay
+----
+
+Body:
+
+[source, json]
+----
+include::u-needs-work-replay.json[]
+----
+
+The response is the same as in the blocking case.
+
+Using this endpoint is interesting to trigger again the `u-needs-work` action for a given event using `curl`, without having to send the complete webhook event body.
+
+=== Readiness and liveness probes
+
+The application provides standard probes:
+
+* `<server url>/q/health/live`: The application is up and running (liveness).
+* `<server url>/q/health/ready`: The application is ready to serve requests (readiness).
+* `<server url>/q/health`: Accumulating all health check procedures in the application.

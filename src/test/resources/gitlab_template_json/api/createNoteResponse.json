@@ -1,0 +1,32 @@
+{
+  "attachment" : null,
+  "author" : {
+    "avatarUrl" : "https://secure.gravatar.com/avatar/74dc88746313d089ee4428508726781c?s=80&d=identicon",
+    "createdAt" : null,
+    "email" : null,
+    "id" : 139,
+    "name" : "****",
+    "state" : "active",
+    "username" : "project_56_bot",
+    "webUrl" : "https://gitlab.example.com/project_56_bot"
+  },
+  "body" : "[John Smith](https://gitlab.example.com/jsmith) [requested](https://gitlab.example.com/a_project/-/merge_requests/34#note_1234) changes on this MR.\n\n:eye_in_speech_bubble: [New changes](https://gitlab.example.com/a_project/-/merge_requests/34/diffs?start_sha=e54b4d028af6509e3b97467b153e16753c35747d) since the comment.",
+  "createdAt" : "2023-03-10T09:14:28.524Z",
+  "downvote" : null,
+  "expiresAt" : null,
+  "fileName" : null,
+  "id" : 42395,
+  "noteableId" : 8072,
+  "noteableType" : "MergeRequest",
+  "noteableIid" : 34,
+  "system" : false,
+  "title" : null,
+  "updatedAt" : "2023-03-10T09:14:28.524Z",
+  "upvote" : null,
+  "resolved" : null,
+  "resolvable" : false,
+  "resolvedBy" : null,
+  "resolvedAt" : null,
+  "type" : null,
+  "position" : null
+}
