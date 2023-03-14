@@ -82,14 +82,14 @@ class UNeedsWorkTest {
 
 		given().when()
 				.header("Content-Type", "application/json")
-				.header("X-Gitlab-Event-UUID", GitlabMockUtil.GITLAB_EVENT_UUID)
+				.header("X-Gitlab-Event-UUID", "test-8921247")
 				.body(GitlabMockUtil.get(GitlabAction.EVENT_NOTE))
 				.post("/u-needs-work/event-blocking")
 				.then()
 				.statusCode(Response.Status.OK.getStatusCode())
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
-				.body("gitlab_event_uuid", equalTo(GitlabMockUtil.GITLAB_EVENT_UUID))
+				.body("gitlab_event_uuid", equalTo("test-8921247"))
 				.body("build_commit", equalTo("6af21ad"))
 				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
 				.body("needs_work_note", notNullValue())
@@ -150,6 +150,55 @@ class UNeedsWorkTest {
 				.body("needs_work_note_error", nullValue());
 
 		verifyRequests(3);
+	}
+
+	@Test
+	void testEndpointRapidReturnMalformedRequest() throws Exception {
+		String json = """
+				{
+				    "foo" : "bar",
+				    "baz" : 43
+				}
+				""";
+		given().when()
+				.header("Content-Type", "application/json")
+				.body(json)
+				.post("/u-needs-work/event")
+				.then()
+				.statusCode(Response.Status.ACCEPTED.getStatusCode())
+				.body(startsWith("{\n"))
+				.body(endsWith("\n}"))
+				.body("gitlab_event_uuid", nullValue())
+				.body("build_commit", equalTo("6af21ad"))
+				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("needs_work_note_error", startsWith("Could not resolve subtype of"));
+
+		verifyRequests(0);
+	}
+
+	@Test
+	void testInvalidEndpoint() throws Exception {
+		String json = """
+				{
+				    "foo" : "bar",
+				    "baz" : 43
+				}
+				""";
+		given().when()
+				.header("Content-Type", "application/json")
+				.header("X-Gitlab-Event-UUID", "test-1289369")
+				.body(json)
+				.post("/foo")
+				.then()
+				.statusCode(Response.Status.ACCEPTED.getStatusCode())
+				.body(startsWith("{\n"))
+				.body(endsWith("\n}"))
+				.body("gitlab_event_uuid", equalTo("test-1289369"))
+				.body("build_commit", equalTo("6af21ad"))
+				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("needs_work_note_error", equalTo("Invalid path: /foo"));
+
+		verifyRequests(0);
 	}
 
 	private void verifyRequests(int expectedRequestNumber) throws InterruptedException {
