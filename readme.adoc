@@ -2,7 +2,7 @@
 :gh-repo-owner: unblu
 :gh-repo-name: u-needs-work
 
-:project-name: UNeedsWork
+:project-name: u-needs-work
 :git-branch: main
 :license: http://www.apache.org/licenses/LICENSE-2.0
 :license-name: Apache 2.0 License
