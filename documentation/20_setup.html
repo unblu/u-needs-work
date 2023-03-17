@@ -146,7 +146,7 @@
 <nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
     <a class="navbar-brand" href="../index.html">
         <span class="navbar-logo"></span><span
-            class="font-weight-bold">UNeedsWork</span>
+            class="font-weight-bold">u-needs-work</span>
     </a>
     <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
         <ul class="navbar-nav mt-2 mt-lg-0">
@@ -285,13 +285,13 @@
 <p>You will need a <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html">personal access token</a> or a <a href="https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html">group access</a> in order for the tool to interact with your repositories on GitLab.</p>
 </div>
 <div class="paragraph">
-<p>In addition, depending on the project&#8217;s configuration, you might need an extra API token, which can be obtained in the same way as the first one.</p>
-</div>
-<div class="paragraph">
 <p>All the actions are done using the REST API of GitLab.</p>
 </div>
 <div class="paragraph">
 <p>You will need the <code>api</code> scope.</p>
+</div>
+<div class="paragraph">
+<p>If you use a Group token, you will need the <code>Developer</code> role, since the tool is posting comments on Merge Request.</p>
 </div>
 </div>
 <div class="sect2">

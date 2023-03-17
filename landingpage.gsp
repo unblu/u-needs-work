@@ -1,7 +1,7 @@
 <div class="row flex-xl-nowrap">
     <main class="col-12 col-md-12 col-xl-12 pl-md-12" role="main">
         <div class="bg-light p-5 rounded">
-            <h1>UNeedsWork</h1>
+            <h1>u-needs-work</h1>
             <p class="lead">
                 The "Changes since you last reviewed" feature from Bitbucket for GitLab.
             </p>
