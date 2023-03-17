@@ -32,7 +32,7 @@ public class GitlabMockUtil {
 	 * Loads the JSON file content for a given action, possibly customizing some properties.
 	 *
 	 * @param action The action for which the corresponding JSON response is required.
-	 * @return String containing the contents of the JSON file for the given action, with its properties customized accordingly to the provided map.
+	 * @return String containing the contents of the JSON file for the given action.
 	 */
 	public static String get(GitlabAction action) {
 		return readFromResources(jsonTemplatesLocation.get(action));

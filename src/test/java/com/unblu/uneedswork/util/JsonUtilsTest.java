@@ -24,15 +24,15 @@ import com.unblu.uneedswork.util.GitlabMockUtil.GitlabAction;
 class JsonUtilsTest {
 
 	@Test
-	void testParseMergeRequest() throws Exception {
+	void testParseReplayInput() throws Exception {
 		NoteEventSimple expected = GitlabMockUtil.createDefaultNoteEventSimple();
-		checkMergeRequestResultFile(expected, NoteEventSimple.class, "_documentation/src/docs/documentation/u-needs-work-replay.json");
+		checkJsonFile(expected, NoteEventSimple.class, "_documentation/src/docs/documentation/u-needs-work-replay.json");
 	}
 
 	@Test
 	void testUNeedsWorkNonBlockingResponseFile() throws Exception {
 		UNeedsWorkResult expected = createUNeedsWorkResult();
-		checkMergeRequestResultFile(expected, UNeedsWorkResult.class, "_documentation/src/docs/documentation/u-needs-work-non-blocking-response.json");
+		checkJsonFile(expected, UNeedsWorkResult.class, "_documentation/src/docs/documentation/u-needs-work-non-blocking-response.json");
 	}
 
 	@Test
@@ -47,14 +47,11 @@ class JsonUtilsTest {
 		note.setNoteContent("[John Smith](https://gitlab.example.com/jsmith) [requested](https://gitlab.example.com/a_project/-/merge_requests/34#note_1234) changes on this MR.\n\n:eye_in_speech_bubble: [New changes](https://gitlab.example.com/a_project/-/merge_requests/34/diffs?start_sha=e54b4d028af6509e3b97467b153e16753c35747d) since the comment.");
 		note.setNoteAuthorId(139L);
 
-		UNeedsWorkResult expected = new UNeedsWorkResult();
-		expected.setBuildCommit("6af21ad");
-		expected.setBuildTimestamp("2022-01-01T07:21:58.378413Z");
-		expected.setGitlabEventUUID("62940263-b495-4f7e-b0e8-578c7307f13d");
+		UNeedsWorkResult expected = createUNeedsWorkResult();
 		expected.setNeedsWorkNote(note);
 		expected.setNeedsWorkNoteType(NoteType.ADDED);
 
-		checkMergeRequestResultFile(expected, UNeedsWorkResult.class, "_documentation/src/docs/documentation/u-needs-work-blocking-response.json");
+		checkJsonFile(expected, UNeedsWorkResult.class, "_documentation/src/docs/documentation/u-needs-work-blocking-response.json");
 	}
 
 	private UNeedsWorkResult createUNeedsWorkResult() {
@@ -65,7 +62,7 @@ class JsonUtilsTest {
 		return result;
 	}
 
-	private <T> void checkMergeRequestResultFile(T expected, Class<T> cls, String filePath) throws IOException, JsonProcessingException, JsonMappingException {
+	private <T> void checkJsonFile(T expected, Class<T> cls, String filePath) throws IOException, JsonProcessingException, JsonMappingException {
 		// Due to https://github.com/docToolchain/docToolchain/issues/898 we need a copy inside the _documentation project because it can't access the java project
 		Path file = Path.of(filePath);
 
