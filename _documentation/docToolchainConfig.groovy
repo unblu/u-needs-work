@@ -71,7 +71,7 @@ microsite.with {
     siteFolder = '../site'
 
     // the title of the microsite, displayed in the upper left corner
-    title = 'UNeedsWork'
+    title = 'u-needs-work'
     // the next items configure some links in the footer
     //
     // contact eMail
@@ -95,7 +95,7 @@ microsite.with {
     footerText = ''
     //
     // site title if no other title is given
-    title = 'UNeedsWork'
+    title = 'u-needs-work'
     //
     // the url to create an issue in github
     // Example: https://github.com/docToolchain/docToolchain/issues/new

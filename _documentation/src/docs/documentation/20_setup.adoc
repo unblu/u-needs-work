@@ -10,11 +10,11 @@ In order to interact with a given Gitlab instance through its REST API, `u-needs
 
 You will need a https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html[personal access token] or a https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html[group access] in order for the tool to interact with your repositories on GitLab.
 
-In addition, depending on the project's configuration, you might need an extra API token, which can be obtained in the same way as the first one.
-
 All the actions are done using the REST API of GitLab.
 
 You will need the `api` scope.
+
+If you use a Group token, you will need the `Developer` role, since the tool is posting comments on Merge Request.
 
 === Application Setup
 
