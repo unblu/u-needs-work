@@ -16,8 +16,12 @@ class GitLabServiceTest {
 		Assertions.assertThat(GitLabService.isNoteRelevant(e1)).isTrue();
 
 		NoteEventSimple e2 = GitlabMockUtil.createDefaultNoteEventSimple();
-		e2.setNoteType("DiffNote");
-		Assertions.assertThat(GitLabService.isNoteRelevant(e2)).isFalse();
+		e2.setNoteType("DiscussionNote");
+		Assertions.assertThat(GitLabService.isNoteRelevant(e2)).isTrue();
+
+		NoteEventSimple e3 = GitlabMockUtil.createDefaultNoteEventSimple();
+		e3.setNoteType("DiffNote");
+		Assertions.assertThat(GitLabService.isNoteRelevant(e3)).isFalse();
 	}
 
 	@Test

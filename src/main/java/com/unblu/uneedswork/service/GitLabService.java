@@ -170,7 +170,7 @@ public class GitLabService {
 	}
 
 	public static boolean isNoteRelevant(NoteEventSimple event) {
-		if (event.getNoteType() != null) {
+		if (Objects.equals(event.getNoteType(), "DiffNote")) {
 			return false;
 		}
 		return isNoteContentRelevant(event.getNoteContent());
