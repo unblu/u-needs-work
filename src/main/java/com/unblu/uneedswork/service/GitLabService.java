@@ -85,6 +85,8 @@ public class GitLabService {
 					gitlabEventUUID, projectId, noteId, noteAuthorId, userName, mrIid);
 		}
 
+		Log.infof("GitlabEvent: '%s' | Finished handling event with result %s",
+				gitlabEventUUID, result);
 		return result;
 	}
 
