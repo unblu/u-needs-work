@@ -151,6 +151,29 @@ class UNeedsWorkTest {
 	}
 
 	@Test
+	void testDiffNote() throws Exception {
+		NoteEventSimple simpleEvent = GitlabMockUtil.createDefaultNoteEventSimple();
+		simpleEvent.setNoteType("DiffNote");
+
+		given().when()
+				.header("Content-Type", "application/json")
+				.body(simpleEvent)
+				.post("/u-needs-work/replay")
+				.then()
+				.statusCode(Response.Status.OK.getStatusCode())
+				.body(startsWith("{\n"))
+				.body(endsWith("\n}"))
+				.body("gitlab_event_uuid", equalTo(GitlabMockUtil.GITLAB_EVENT_UUID))
+				.body("build_commit", equalTo("6af21ad"))
+				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("needs_work_note", nullValue())
+				.body("needs_work_note_type", nullValue())
+				.body("needs_work_note_error", nullValue());
+
+		verifyRequests(0);
+	}
+
+	@Test
 	void testEndpointRapidReturnMalformedRequest() throws Exception {
 		String json = """
 				{

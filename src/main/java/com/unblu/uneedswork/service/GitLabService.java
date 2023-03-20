@@ -67,7 +67,7 @@ public class GitLabService {
 		String userName = event.getUserName();
 
 		if (mrIid != null) {
-			if (isNoteRelevant(event.getNoteContent())) {
+			if (isNoteRelevant(event)) {
 				try {
 					postNeedsWorkComment(event, result);
 				} catch (Exception e) {
@@ -77,8 +77,8 @@ public class GitLabService {
 				}
 
 			} else {
-				Log.infof("GitlabEvent: '%s' | Skip event (not relevant) for Project: '%d', NoteId: '%d', NoteAuthorId: '%d', UserName: '%s', MrIid: '%d'",
-						gitlabEventUUID, projectId, noteId, noteAuthorId, userName, mrIid);
+				Log.infof("GitlabEvent: '%s' | Skip event (not relevant) for Project: '%d', NoteId: '%d', NoteAuthorId: '%d', UserName: '%s', MrIid: '%d', NoteType: '%s'",
+						gitlabEventUUID, projectId, noteId, noteAuthorId, userName, mrIid, event.getNoteType());
 			}
 		} else {
 			Log.infof("GitlabEvent: '%s' | Skip event (no MR) for Project: '%d', NoteId: '%d', NoteAuthorId: '%d', UserName: '%s', MrIid: '%d'",
@@ -169,7 +169,14 @@ public class GitLabService {
 		return updatedBody;
 	}
 
-	public static boolean isNoteRelevant(String noteContent) {
+	public static boolean isNoteRelevant(NoteEventSimple event) {
+		if (Objects.equals(event.getNoteType(), "DiffNote")) {
+			return false;
+		}
+		return isNoteContentRelevant(event.getNoteContent());
+	}
+
+	public static boolean isNoteContentRelevant(String noteContent) {
 		String lowerCase = noteContent.toLowerCase();
 		return lowerCase.contains(":wrench:") || lowerCase.contains("needs work");
 	}
