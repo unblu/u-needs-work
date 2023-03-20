@@ -48,8 +48,6 @@ class UNeedsWorkTest {
 	@ConfigProperty(name = "gitlab.api.token")
 	String apiToken;
 
-	String branchModelContent;
-
 	@BeforeEach
 	void init() throws IOException {
 		wireMockServer.resetAll();
@@ -100,11 +98,11 @@ class UNeedsWorkTest {
 	@Test
 	void testSuccessCase() throws Exception {
 		setupDefaultStubs();
-		NoteEventSimple mrSimple = GitlabMockUtil.createDefaultNoteEventSimple();
+		NoteEventSimple simpleEvent = GitlabMockUtil.createDefaultNoteEventSimple();
 
 		given().when()
 				.header("Content-Type", "application/json")
-				.body(mrSimple)
+				.body(simpleEvent)
 				.post("/u-needs-work/replay")
 				.then()
 				.statusCode(Response.Status.OK.getStatusCode())
@@ -132,11 +130,11 @@ class UNeedsWorkTest {
 		setupGetMrCommentsExisting();
 		setupUpdateComment();
 
-		NoteEventSimple mrSimple = GitlabMockUtil.createDefaultNoteEventSimple();
+		NoteEventSimple simpleEvent = GitlabMockUtil.createDefaultNoteEventSimple();
 
 		given().when()
 				.header("Content-Type", "application/json")
-				.body(mrSimple)
+				.body(simpleEvent)
 				.post("/u-needs-work/replay")
 				.then()
 				.statusCode(Response.Status.OK.getStatusCode())
