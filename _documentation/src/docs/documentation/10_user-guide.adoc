@@ -14,4 +14,4 @@ image::needs-work-comment.png[alt=Flower,width=788,height=175]
 
 Using the "New changes since the comment." link, you can access the diff view where you compare the changes since your last review.
 
-NOTE: Comments or threads on the "Changes" tab are ignored (when you post a remark on the code in the diff view). The "needs work" message has to be posted on the review dialog (or as comment in the "Overview" tab).
+NOTE: Comments or threads on the "Changes" tab are ignored (when you post a remark on the code in the diff view). The "needs work" message has to be posted on the review summary dialog, or directly in the "Overview" tab.
