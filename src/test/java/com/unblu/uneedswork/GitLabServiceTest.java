@@ -12,9 +12,19 @@ class GitLabServiceTest {
 
 	@Test
 	void testIsNoteRelevant() throws Exception {
-		Assertions.assertThat(GitLabService.isNoteRelevant("foo")).isFalse();
-		Assertions.assertThat(GitLabService.isNoteRelevant(":wrench: please update")).isTrue();
-		Assertions.assertThat(GitLabService.isNoteRelevant("This needs work!")).isTrue();
+		NoteEventSimple e1 = GitlabMockUtil.createDefaultNoteEventSimple();
+		Assertions.assertThat(GitLabService.isNoteRelevant(e1)).isTrue();
+
+		NoteEventSimple e2 = GitlabMockUtil.createDefaultNoteEventSimple();
+		e2.setNoteType("DiffNote");
+		Assertions.assertThat(GitLabService.isNoteRelevant(e2)).isFalse();
+	}
+
+	@Test
+	void testIsNoteContentRelevant() throws Exception {
+		Assertions.assertThat(GitLabService.isNoteContentRelevant("foo")).isFalse();
+		Assertions.assertThat(GitLabService.isNoteContentRelevant(":wrench: please update")).isTrue();
+		Assertions.assertThat(GitLabService.isNoteContentRelevant("This needs work!")).isTrue();
 	}
 
 	@Test

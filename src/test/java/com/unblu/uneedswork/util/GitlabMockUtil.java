@@ -66,6 +66,7 @@ public class GitlabMockUtil {
 		event.setNoteAuthorId(37L);
 		event.setUserName("John Smith");
 		event.setNoteContent("This needs work!");
+		event.setNoteType(null);
 		event.setMrIid(34L);
 		event.setMrLastCommitSha("e54b4d028af6509e3b97467b153e16753c35747d");
 		event.setMrWebUrl("https://gitlab.example.com/a_project/-/merge_requests/34");
