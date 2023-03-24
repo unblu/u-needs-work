@@ -222,6 +222,40 @@ class UNeedsWorkTest {
 		verifyRequests(0);
 	}
 
+	@Test
+	void testHealthLive() throws Exception {
+		//make sure we get an answer from the 'quarkus-smallrye-health' module
+		given().when()
+				.get("/q/health/live")
+				.then()
+				.statusCode(Response.Status.OK.getStatusCode())
+				.body("status", notNullValue())
+				.body("checks", notNullValue())
+				.body("gitlab_event_uuid", nullValue())
+				.body("build_commit", nullValue())
+				.body("build_timestamp", nullValue())
+				.body("needs_work_note_error", nullValue());
+
+		verifyRequests(0);
+	}
+
+	@Test
+	void testHealthReady() throws Exception {
+		//make sure we get an answer from the 'quarkus-smallrye-health' module
+		given().when()
+				.post("/q/health/ready")
+				.then()
+				.statusCode(Response.Status.OK.getStatusCode())
+				.body("status", notNullValue())
+				.body("checks", notNullValue())
+				.body("gitlab_event_uuid", nullValue())
+				.body("build_commit", nullValue())
+				.body("build_timestamp", nullValue())
+				.body("needs_work_note_error", nullValue());
+
+		verifyRequests(0);
+	}
+
 	private void verifyRequests(int expectedRequestNumber) throws InterruptedException {
 		List<ServeEvent> allServeEvents = waitForRequests(expectedRequestNumber);
 
