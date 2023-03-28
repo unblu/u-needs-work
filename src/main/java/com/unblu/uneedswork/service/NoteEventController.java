@@ -48,13 +48,13 @@ public class NoteEventController {
 	}
 
 	@Route(path = "/u-needs-work/replay", order = 1, methods = HttpMethod.POST, type = HandlerType.BLOCKING)
-	public UNeedsWorkResult replay(@Body NoteEventSimple mrSimple) {
-		String gitlabEventUUID = mrSimple.getGitlabEventUUID();
+	public UNeedsWorkResult replay(@Body NoteEventSimple event) {
+		String gitlabEventUUID = event.getGitlabEventUUID();
 		if (gitlabEventUUID == null) {
 			gitlabEventUUID = "replay-" + new Random().nextInt(1000, 10000);
 		}
 		Log.infof("GitlabEvent: '%s' | Replay", gitlabEventUUID);
-		return gitLabService.handleEvent(mrSimple);
+		return gitLabService.handleEvent(event);
 	}
 
 	@Route(path = "/*", order = 2)
