@@ -2,7 +2,7 @@ package com.unblu.uneedswork.service;
 
 import java.util.Random;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.gitlab4j.api.webhook.NoteEvent;
 

@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.gitlab4j.api.GitLabApi;
@@ -123,7 +123,7 @@ public class GitLabService {
 
 			String body = computeCreateBody(event, userBody, newChangesBody);
 			Note note = gitlab.getNotesApi()
-					.createMergeRequestNote(projectId, mrIid, body);
+					.createMergeRequestNote(projectId, mrIid, body, null, false);
 			Log.infof("GitlabEvent: '%s' | Posted new comment for Project: '%d', NoteId: '%d', NoteAuthorId: '%d', UserName: '%s', MrIid: '%d', New note id: '%d'",
 					gitlabEventUUID, projectId, noteId, noteAuthorId, userName, mrIid, note.getId());
 			result.setNeedsWorkNote(fromNote(note, event));

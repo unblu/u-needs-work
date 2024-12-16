@@ -1,8 +1,8 @@
 package com.unblu.uneedswork.service;
 
-import org.gitlab4j.api.models.User;
 import org.gitlab4j.api.webhook.EventMergeRequest;
 import org.gitlab4j.api.webhook.EventProject;
+import org.gitlab4j.api.webhook.EventUser;
 import org.gitlab4j.api.webhook.NoteEvent;
 import org.gitlab4j.api.webhook.NoteEvent.ObjectAttributes;
 
@@ -34,7 +34,7 @@ public class JsonUtils {
 			result.setMrWebUrl(mr.getUrl());
 			result.setMrLastCommitSha(mr.getLastCommit().getId());
 		}
-		User user = event.getUser();
+		EventUser user = event.getUser();
 		if (user != null) {
 			result.setUserName(user.getName());
 		}
