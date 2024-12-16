@@ -19,6 +19,8 @@ import com.unblu.uneedswork.model.NoteEventSimple;
 import com.unblu.uneedswork.model.UNeedsWorkNote;
 import com.unblu.uneedswork.model.UNeedsWorkResult;
 
+import io.quarkus.info.BuildInfo;
+import io.quarkus.info.GitInfo;
 import io.quarkus.logging.Log;
 import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.common.annotation.Blocking;
@@ -38,11 +40,11 @@ public class GitLabService {
 	@ConfigProperty(name = "gitlab.api.token")
 	String apiToken;
 
-	@ConfigProperty(name = "build.commit", defaultValue = "n/a")
-	String buildCommit;
+	@Inject
+	GitInfo gitInfo;
 
-	@ConfigProperty(name = "build.timestamp", defaultValue = "n/a")
-	String buildTimestamp;
+	@Inject
+	BuildInfo buildInfo;
 
 	private GitLabApi gitlab;
 	private Long uneedsworkUser;
@@ -186,8 +188,8 @@ public class GitLabService {
 	public UNeedsWorkResult createResult(String gitlabEventUUID) {
 		UNeedsWorkResult result = new UNeedsWorkResult();
 		result.setGitlabEventUUID(gitlabEventUUID);
-		result.setBuildCommit(buildCommit);
-		result.setBuildTimestamp(buildTimestamp);
+		result.setBuildCommit(gitInfo.latestCommitId().substring(7));
+		result.setBuildTimestamp(buildInfo.time().toString());
 		return result;
 	}
 }

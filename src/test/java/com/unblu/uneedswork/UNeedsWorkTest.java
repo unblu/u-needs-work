@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -32,6 +33,8 @@ import com.unblu.uneedswork.model.NoteEventSimple;
 import com.unblu.uneedswork.util.GitlabMockUtil;
 import com.unblu.uneedswork.util.GitlabMockUtil.GitlabAction;
 
+import io.quarkus.info.BuildInfo;
+import io.quarkus.info.GitInfo;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -47,6 +50,12 @@ class UNeedsWorkTest {
 
 	@ConfigProperty(name = "gitlab.api.token")
 	String apiToken;
+
+	@Inject
+	GitInfo gitInfo;
+
+	@Inject
+	BuildInfo buildInfo;
 
 	@BeforeEach
 	void init() throws IOException {
@@ -68,8 +77,8 @@ class UNeedsWorkTest {
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
 				.body("gitlab_event_uuid", equalTo(GitlabMockUtil.GITLAB_EVENT_UUID))
-				.body("build_commit", equalTo("6af21ad"))
-				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"));
+				.body("build_commit", equalTo(expectedBuildCommitValue()))
+				.body("build_timestamp", equalTo(expectedBuildTimestampValue()));
 
 		verifyRequests(3);
 	}
@@ -88,8 +97,8 @@ class UNeedsWorkTest {
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
 				.body("gitlab_event_uuid", equalTo("test-8921247"))
-				.body("build_commit", equalTo("6af21ad"))
-				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("build_commit", equalTo(expectedBuildCommitValue()))
+				.body("build_timestamp", equalTo(expectedBuildTimestampValue()))
 				.body("needs_work_note", notNullValue())
 				.body("needs_work_note_type", equalTo("ADDED"))
 				.body("needs_work_note_error", nullValue());
@@ -109,8 +118,8 @@ class UNeedsWorkTest {
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
 				.body("gitlab_event_uuid", equalTo(GitlabMockUtil.GITLAB_EVENT_UUID))
-				.body("build_commit", equalTo("6af21ad"))
-				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("build_commit", equalTo(expectedBuildCommitValue()))
+				.body("build_timestamp", equalTo(expectedBuildTimestampValue()))
 				.body("needs_work_note", notNullValue())
 				.body("needs_work_note_type", equalTo("ADDED"))
 				.body("needs_work_note_error", nullValue());
@@ -141,8 +150,8 @@ class UNeedsWorkTest {
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
 				.body("gitlab_event_uuid", equalTo(GitlabMockUtil.GITLAB_EVENT_UUID))
-				.body("build_commit", equalTo("6af21ad"))
-				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("build_commit", equalTo(expectedBuildCommitValue()))
+				.body("build_timestamp", equalTo(expectedBuildTimestampValue()))
 				.body("needs_work_note", notNullValue())
 				.body("needs_work_note_type", equalTo("UPDATED"))
 				.body("needs_work_note_error", nullValue());
@@ -164,8 +173,8 @@ class UNeedsWorkTest {
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
 				.body("gitlab_event_uuid", equalTo(GitlabMockUtil.GITLAB_EVENT_UUID))
-				.body("build_commit", equalTo("6af21ad"))
-				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("build_commit", equalTo(expectedBuildCommitValue()))
+				.body("build_timestamp", equalTo(expectedBuildTimestampValue()))
 				.body("needs_work_note", nullValue())
 				.body("needs_work_note_type", nullValue())
 				.body("needs_work_note_error", nullValue());
@@ -190,8 +199,8 @@ class UNeedsWorkTest {
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
 				.body("gitlab_event_uuid", nullValue())
-				.body("build_commit", equalTo("6af21ad"))
-				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("build_commit", equalTo(expectedBuildCommitValue()))
+				.body("build_timestamp", equalTo(expectedBuildTimestampValue()))
 				.body("needs_work_note_error", startsWith("Could not resolve subtype of"));
 
 		verifyRequests(0);
@@ -215,8 +224,8 @@ class UNeedsWorkTest {
 				.body(startsWith("{\n"))
 				.body(endsWith("\n}"))
 				.body("gitlab_event_uuid", equalTo("test-1289369"))
-				.body("build_commit", equalTo("6af21ad"))
-				.body("build_timestamp", equalTo("2022-01-01T07:21:58.378413Z"))
+				.body("build_commit", equalTo(expectedBuildCommitValue()))
+				.body("build_timestamp", equalTo(expectedBuildTimestampValue()))
 				.body("needs_work_note_error", equalTo("Invalid path: /foo"));
 
 		verifyRequests(0);
@@ -344,5 +353,13 @@ class UNeedsWorkTest {
 						.willReturn(aResponse()
 								.withHeader("Content-Type", "application/json")
 								.withBody(GitlabMockUtil.get(GitlabAction.GET_USER))));
+	}
+
+	private String expectedBuildCommitValue() {
+		return gitInfo.latestCommitId().substring(7);
+	}
+
+	private String expectedBuildTimestampValue() {
+		return buildInfo.time().toString();
 	}
 }
